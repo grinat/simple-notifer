@@ -10,7 +10,7 @@ import (
 const VERSION = "0.2.0"
 
 type Params struct {
-	Proxy         string `env:"NOTIFIER_PROXY"  envDefault:"socks5://grinat:1122334455@95.216.138.74:1080"`
+	Proxy         string `env:"NOTIFIER_PROXY"  envDefault:""`
 	Port          string `env:"NOTIFIER_PORT"   envDefault:"9191"`
 	HerokuPort    string `env:"PORT"`
 	HerokuAppName string `env:"HEROKU_APP_NAME"`
