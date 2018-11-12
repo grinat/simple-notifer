@@ -13,6 +13,7 @@ func HandleHelp(w http.ResponseWriter, cfg Params)  {
 	helpMsg := `
 Supported services:
 telegram
+slack
 
 For send notify exec:
 curl -i -X POST -F "service=telegram" -F "message=Hello" -F "recipient=your_chat_id" -F "token=your_token" `
@@ -24,7 +25,7 @@ For send file add:
 
 Or send get response(in what mode file not supported):
 `
-	helpMsg += host + "?service=telegram&message=Hello&recipient=your_chat_id&token=your_token"
+	helpMsg += host + "?service=slack&message=Hello&recipient=your_channel_id&token=your_token"
 	helpMsg += `
 
 Return error message with status code 500 or notify id with status code 201
@@ -62,6 +63,12 @@ func HandleSendMessage(w http.ResponseWriter, r *http.Request, cfg Params)  {
 	switch r.FormValue("service") {
 	case "telegram":
 		notifier = &Telegram{
+			cfg: cfg,
+			sender: sender,
+			msg: msg,
+		}
+	case "slack":
+		notifier = &Slack{
 			cfg: cfg,
 			sender: sender,
 			msg: msg,

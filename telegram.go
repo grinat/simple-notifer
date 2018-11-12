@@ -3,10 +3,8 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
-	"net/http/httputil"
 	"strconv"
 	"strings"
 )
@@ -51,8 +49,8 @@ func (t *Telegram) Notify(_ *http.Request) error {
 		if err != nil {
 			return err
 		}
-		logBody(res)
-		err = decodeBody(res, &result)
+		LogBody(res)
+		err = t.decodeBody(res, &result)
 		if err != nil {
 			return err
 		}
@@ -68,8 +66,8 @@ func (t *Telegram) Notify(_ *http.Request) error {
 	if err != nil {
 		return err
 	}
-	logBody(res)
-	err = decodeBody(res, &result)
+	LogBody(res)
+	err = t.decodeBody(res, &result)
 	if err != nil {
 		return err
 	}
@@ -81,16 +79,7 @@ func (t *Telegram) GetMessageId() string {
 	return t.lastMessageId
 }
 
-func logBody(res *http.Response)  {
-	requestDump, err := httputil.DumpResponse(res, true)
-	if err != nil {
-		fmt.Println("Cant dump response", err)
-	} else {
-		fmt.Println(string(requestDump))
-	}
-}
-
-func decodeBody(res *http.Response, model *TelegramApiAnswer) error {
+func (t *Telegram) decodeBody(res *http.Response, model *TelegramApiAnswer) error {
 	err := json.NewDecoder(res.Body).Decode(&model)
 	if err != nil {
 		return err

@@ -12,6 +12,7 @@ import (
 type Sender struct {
 	Method string
 	Proxy string
+	Headers map[string] string
 }
 
 func (sender * Sender) SendMultipart(endpoint string, formData map[string]io.Reader) (err error, res *http.Response) {
@@ -55,6 +56,13 @@ func (sender * Sender) SendMultipart(endpoint string, formData map[string]io.Rea
 	if err != nil {
 		return err, res
 	}
+
+	// set headers
+	for key, value := range sender.Headers {
+		req.Header.Set(key, value)
+	}
+
+	// set content type
 	req.Header.Set("Content-Type", w.FormDataContentType())
 
 	// submit request
