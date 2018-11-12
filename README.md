@@ -1,7 +1,5 @@
 ### Simple notifier
-Universal adapter for send message to instant messengers. Now supported:
-
-- Telegram
+Universal adapter for send message to instant messengers.
 
 ### Install to heroku
 For repos, clone and exec:
@@ -21,8 +19,14 @@ fresh
 ```
 
 ### Usage local
+Build:
 
 ```
 go build && ./simple-notifer
-curl -i -X POST -F "service=telegram" -F "message=Hello" -F "chat_id=-296931564" -F "token=your_token" localhost:9191/send-message
+```
+
+Send response for see help page with services and methods:
+
+```
+http://localhost:9191
 ```

@@ -9,5 +9,8 @@
 			"revisionTime": "2018-10-24T00:58:29Z"
 		}
 	],
+	"heroku": {
+		"goVersion": "go1.9.1"
+	},
 	"rootPath": "simple-notifer"
 }
